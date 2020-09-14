@@ -32,6 +32,9 @@ def get_pics_list(html):
 
 
 def download_imgs(url):
+    if not url.endswith('jpg') and not url.endswith('png') and not url.endswith('gif'):
+        return
+
     local_path = ASSETS_FOLDER + os.path.basename(url)
     
     if not os.path.exists(ASSETS_FOLDER):
@@ -49,7 +52,7 @@ def replace_url(file_path, file_text, img_urls):
     for url in img_urls:
         if(url.startswith('http')):
             file_text = file_text.replace(url, ASSETS_FOLDER + os.path.basename(url))
-    with open(file_path, 'w') as f:
+    with open(file_path, 'w', encoding='utf-8') as f:
         f.write(file_text)
     print(f'处理完成。')
 
