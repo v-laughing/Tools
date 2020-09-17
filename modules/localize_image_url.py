@@ -8,6 +8,8 @@ import requests
 from bs4 import BeautifulSoup
 
 ASSETS_FOLDER = './assets/'
+REMOTE_PATH = 'https://raw.githubusercontent.com/v-laughing/assets/master/pics/'
+
 
 def get_files_list(dir):
     """
@@ -50,8 +52,10 @@ def download_imgs(url):
 
 def replace_url(file_path, file_text, img_urls):
     for url in img_urls:
-        if(url.startswith('http')):
-            file_text = file_text.replace(url, ASSETS_FOLDER + os.path.basename(url))
+        # if(url.startswith('http')):
+            # file_text = file_text.replace(url, ASSETS_FOLDER + os.path.basename(url))
+        if(url.startswith(ASSETS_FOLDER)):
+            file_text = file_text.replace(url, REMOTE_PATH + os.path.basename(url))
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(file_text)
     print(f'处理完成。')
@@ -64,8 +68,8 @@ def read_md(file_path):
     with open(file_path, encoding='utf-8') as f:
         text = f.read()
         img_urls = get_pics_list(text)
-    for p in img_urls:
-        download_imgs(p)
+    # for p in img_urls:
+    #     download_imgs(p)
     return text, img_urls
 
 
